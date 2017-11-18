@@ -6,7 +6,7 @@ const app = express();
 // res = response to send back to requester
 // arrow function will be run anytime route is requested
 app.get('/', (req, res) => {
-  res.send({ hi: 'thre' });
+  res.send({ hi: 'there' });
 });
 
 // instructs express to tell node to listen for traffic on port 5000
