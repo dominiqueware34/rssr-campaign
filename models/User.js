@@ -4,9 +4,10 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   googleId: String,
   twitterId: String,
-  fname: String,
-  lname: String,
-  avatar: String
+  name: String,
+  googleAvatar: String,
+  twitterAvatar: String,
+  gravatar: String
 });
 
 // first argument name of collection

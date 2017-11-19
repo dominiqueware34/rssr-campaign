@@ -13,13 +13,14 @@ module.exports = app => {
   );
   app.get(
     '/auth/twitter',
-    passport.authenticate('google', {
+    passport.authenticate('twitter', {
       scope: ['profile', 'email']
     })
   );
   // this step is to retrieve user profile using code
   // passport will handle taking code from URL and turn into profile
   app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get('/auth/twitter/callback', passport.authenticate('twitter'));
 
   app.get('/api/logout', (req, res) => {
     // logout passed in by passport. removes the cookie
