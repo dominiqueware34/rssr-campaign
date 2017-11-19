@@ -11,6 +11,12 @@ module.exports = app => {
       scope: ['profile', 'email']
     })
   );
+  app.get(
+    '/auth/twitter',
+    passport.authenticate('google', {
+      scope: ['profile', 'email']
+    })
+  );
   // this step is to retrieve user profile using code
   // passport will handle taking code from URL and turn into profile
   app.get('/auth/google/callback', passport.authenticate('google'));
@@ -22,7 +28,7 @@ module.exports = app => {
   });
 
   app.get('/api/current_user', (req, res) => {
-    // console.log(req.user);
+    console.log(req.user);
     res.send(req.user);
   });
 };
