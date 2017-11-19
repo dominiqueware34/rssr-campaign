@@ -31,6 +31,7 @@ passport.use(
       const { name, id, photos } = profile;
       User.findOne({ googleId: id }).then(user => {
         if (user) {
+          console.log(user);
           // DONE: Tells passport user is authenticated
           // first argument: error
           // secound argument: user data
