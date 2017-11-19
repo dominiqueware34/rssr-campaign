@@ -7,14 +7,20 @@ const keys = require('../config/keys');
 const User = mongoose.model('users');
 
 passport.serializeUser((user, done) => {
+  console.log('serializeUser user');
+  console.log(user);
   // user: value we pulled from database
   // this sets cookie
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
+  console.log('deserializeUser id');
+  console.log(id);
   // turn id back into user
   User.findById(id).then(user => {
+    console.log('deserializeUser find user');
+    console.log(user);
     done(null, user);
   });
 });
