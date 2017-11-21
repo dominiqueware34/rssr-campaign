@@ -19,13 +19,25 @@ module.exports = app => {
   );
   // this step is to retrieve user profile using code
   // passport will handle taking code from URL and turn into profile
-  app.get('/auth/google/callback', passport.authenticate('google'));
-  app.get('/auth/twitter/callback', passport.authenticate('twitter'));
+  app.get(
+    '/auth/google/callback',
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
+  app.get(
+    '/auth/twitter/callback',
+    passport.authenticate('twitter'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     // logout passed in by passport. removes the cookie
     req.logout();
-    res.send(req.user);
+    res.redirect('/');
   });
 
   app.get('/api/current_user', (req, res) => {

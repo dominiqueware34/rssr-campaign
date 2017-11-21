@@ -26,26 +26,21 @@ passport.use(
       callbackURL: '/auth/twitter/callback',
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       const { id, id_str, profile_image_url_https, name } = profile._json;
+      const foundUser = await User.findOne({ twitterId: id });
 
-      User.findOne({ twitterId: id }).then(user => {
-        if (user) {
-          console.log('FOUND TWITTER USER IN DB');
-          done(null, user);
-          return false;
-        } else {
-          console.log('CREATING NEW USER');
-          console.log(parseInt(id_str));
-          new User({
-            twitterId: parseInt(id_str),
-            name: name,
-            twitterAvatar: profile_image_url_https
-          })
-            .save()
-            .then(user => done(null, user));
-        }
-      });
+      if (foundUser) {
+        return done(null, foundUser);
+      }
+
+      const user = await new User({
+        twitterId: parseInt(id_str),
+        name: name,
+        twitterAvatar: profile_image_url_https
+      }).save();
+
+      done(null, user);
     }
   )
 );
@@ -58,26 +53,24 @@ passport.use(
       callbackURL: '/auth/google/callback',
       proxy: true
     },
-    (accessToken, refreshToken, profile, done) => {
+    async (accessToken, refreshToken, profile, done) => {
       const { name, id, photos } = profile;
-      User.findOne({ googleId: id }).then(user => {
-        if (user) {
-          // console.log(user);
-          // DONE: Tells passport user is authenticated
-          // first argument: error
-          // secound argument: user data
-          done(null, user);
-          return false;
-        } else {
-          new User({
-            googleId: id,
-            name: `${name.givenName} ${name.familyName}`,
-            googleAvatar: photos[0].value
-          })
-            .save()
-            .then(user => done(null, user));
-        }
-      });
+      const foundUser = await User.findOne({ googleId: id });
+
+      if (foundUser) {
+        // console.log(user);
+        // DONE: Tells passport user is authenticated
+        // first argument: error
+        // secound argument: user data
+        return done(null, foundUser);
+      }
+
+      const user = await new User({
+        googleId: id,
+        name: `${name.givenName} ${name.familyName}`,
+        googleAvatar: photos[0].value
+      }).save();
+      done(null, user);
     }
   )
 );
