@@ -20,8 +20,7 @@ class Header extends Component {
         );
       default:
         return [
-          <li key="name">{`Welcome, ${auth.name} `}</li>,
-          <li key="avatar">
+          <li key="avatar" style={{ margin: '0 10px' }}>
             <img
               className="circle responsive-img"
               src={auth.twitterAvatar}
@@ -30,6 +29,9 @@ class Header extends Component {
           </li>,
           <li key="Payments">
             <Payments />
+          </li>,
+          <li key="credits" style={{ margin: '0 10px' }}>
+            Credits: {auth.credits}
           </li>,
           <li key="logout">
             <a href="/api/logout">Logout</a>

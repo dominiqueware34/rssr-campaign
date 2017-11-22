@@ -5,7 +5,10 @@ const userSchema = new Schema({
   googleId: String,
   twitterId: String,
   name: String,
-  credits: Number,
+  credits: {
+    type: Number,
+    default: 0
+  },
   googleAvatar: String,
   twitterAvatar: String,
   gravatar: String

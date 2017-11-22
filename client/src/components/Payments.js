@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as a from '../actions';
 import StripeCheckout from 'react-stripe-checkout';
 
 class Checkout extends Component {
@@ -10,15 +12,13 @@ class Checkout extends Component {
         description="Pay $5.00 for five survey credits"
         allowRememberMe
         closed={() => console.log('Thanks for the payment')}
-        token={token => console.log(token)}
+        token={token => this.props.handleToken(token)}
         stripeKey={process.env.REACT_APP_STRIPE_PK}
       >
-        <a className="waves-effect waves-light btn">
-          <i className="material-icons left">cloud</i>button
-        </a>
+        <a className="waves-effect waves-light btn">Add credits</a>
       </StripeCheckout>
     );
   }
 }
 
-export default Checkout;
+export default connect(null, a)(Checkout);
