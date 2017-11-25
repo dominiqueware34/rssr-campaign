@@ -8,7 +8,7 @@ import * as a from '../actions';
 class Header extends Component {
   renderContent() {
     const { auth } = this.props;
-    console.log(auth);
+
     switch (auth) {
       case null:
         return false;
@@ -20,18 +20,22 @@ class Header extends Component {
         );
       default:
         return [
-          <li key="avatar" style={{ margin: '0 10px' }}>
-            <img
-              className="circle responsive-img"
-              src={auth.twitterAvatar}
-              alt=""
-            />
+          <li key="avatar" style={{ margin: '5px 5px' }}>
+            <Link to="/profile">
+              <img
+                className="circle responsive-img"
+                src={auth.twitterAvatar}
+                alt=""
+              />
+            </Link>
           </li>,
           <li key="Payments">
             <Payments />
           </li>,
+
           <li key="credits" style={{ margin: '0 10px' }}>
             Credits: {auth.credits}
+            <i className="large material-icons">monetization_on</i>
           </li>,
           <li key="logout">
             <a href="/api/logout">Logout</a>

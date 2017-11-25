@@ -1,32 +1,44 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as a from '../actions';
 
+import Materialize from 'materialize-css/dist/js/materialize.js';
 import Header from './Header';
-import Feature from './Feature';
+import SurveyNew from './surveys/SurveyNew';
+import Dashboard from './Dashboard';
 import Home from './Home';
-import Footer from './Footer';
+import NotFound from './NotFound';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
   render() {
+    if (this.props.toast) {
+      Materialize.toast(this.props.toast, 4000);
+    }
     return (
       <div>
         <BrowserRouter>
-          <div className="container">
+          <main>
             <Header />
-            <Route exact path="/" component={Home} />
-            <Route exact path="/surveys" component={() => <h1>Surveys</h1>} />
-            <Footer />
-          </div>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/surveys" component={Dashboard} />
+              <Route exact path="/surveys/new" component={SurveyNew} />
+              <Route component={NotFound} />
+            </Switch>
+          </main>
         </BrowserRouter>
       </div>
     );
   }
 }
-function mapStateToProps(state) {}
+function mapStateToProps(state) {
+  return {
+    toast: state.toast
+  };
+}
 
-export default connect(null, a)(App);
+export default connect(mapStateToProps, a)(App);

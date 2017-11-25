@@ -1,17 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const flash = require('express-flash-messages');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session'); // gives us access to cookies
 const passport = require('passport');
 
 require('./models/User');
+require('./models/Survey');
 require('./services/passport'); // brings in whole file
 // connect to mongoosse
 mongoose.connect(keys.MONGO_URI);
 
 const app = express();
 
+app.use(flash());
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -25,6 +28,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/paymentsRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
   // express will serve produciton assets (e.g main.js )

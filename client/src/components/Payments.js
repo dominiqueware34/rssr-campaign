@@ -15,7 +15,7 @@ class Checkout extends Component {
         token={token => this.props.handleToken(token)}
         stripeKey={process.env.REACT_APP_STRIPE_PK}
       >
-        <a className="waves-effect waves-light btn">Add credits</a>
+        <a className="waves-effect waves-light btn">Add Survey Credits</a>
       </StripeCheckout>
     );
   }
