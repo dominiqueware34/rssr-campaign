@@ -6,6 +6,6 @@ import toastReducer from './toastReducer';
 export default combineReducers({
   auth: authReducer,
   form: reduxForm,
-  survey: surveyReducer,
+  surveys: surveyReducer,
   toast: toastReducer
 });

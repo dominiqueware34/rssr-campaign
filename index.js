@@ -10,6 +10,7 @@ require('./models/User');
 require('./models/Survey');
 require('./services/passport'); // brings in whole file
 // connect to mongoosse
+mongoose.Promise = global.Promise;
 mongoose.connect(keys.MONGO_URI);
 
 const app = express();
